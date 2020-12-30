@@ -96,6 +96,10 @@
         @change-linehead="_onUpdateProgress"/>
     </div>
 
+    <div style="padding-right:10px">
+      <p>{{audioDuration}}</p>
+    </div>
+
     <audio :id="playerUniqId" :src="audioSource"></audio>
   </div>
 </template>
@@ -157,6 +161,11 @@
       },
       playerUniqId () {
         return `audio-player${this._uid}`
+      },
+      audioDuration () {
+        let timeArr = this.playedTime.toString()
+        let seconds = timeArr.split(':')
+        return seconds[1]
       }
     },
     methods: {

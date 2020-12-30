@@ -246,7 +246,7 @@
       
       <!-- stop / close buttons -->
         <div class="ar-end-actions">
-          <div style="padding-right:10px">
+          <div v-if="isRecorder" style="padding-right:10px">
             <p>-{{ timerInSeconds - this.recorderDurationInSeconds }}</p>
           </div>
           <icon-button
