@@ -186,75 +186,60 @@
 
 <template>
   <div class="ar">
-    <div class="ar__overlay" v-if="isUploading"></div>
-    <div class="ar-spinner" v-if="isUploading">
-      <div class="ar-spinner__dot"></div>
-      <div class="ar-spinner__dot"></div>
-      <div class="ar-spinner__dot"></div>
-    </div>
 
     <div class="ar-content" :class="{'ar__blur': isUploading}">
-      <div class="ar-recorder">
-        <div>
+      <div style="align-items:center;flex-direction: row;width:100%;display: flex;">
+        
+          <!-- recorder block -->
+          <div v-if="isRecorder" style="width:100%;display: flex;align-items:center;" class="ar-player">
+            <!-- recorder/mic button -->
+            <div style="flex:1" class="ar-player-actions">
+              <icon-button
+              class="ar-icon ar-icon__lg"
+              :name="iconButtonType"
+              :class="{
+                'ar-icon--rec': isRecording,
+                'ar-icon--pulse': isRecording && volume > 0.02
+              }"
+              @click.native="toggleRecorder"/>
+            </div>
+
+            <!-- recording status line -->
+            <div style="flex:2;text-align:center;margin-left:10px;margin-right:10px;">
+              <line-control
+              v-if="isRecorder"
+              
+              ref-id="progress"
+              :percentage="recorderDurationInSeconds*3.3"
+              @change-linehead="_onUpdateProgress"/>
+            </div>
+
+          </div>
+
+        <!-- audio player -->
+        <audio-player v-else :record="selected"/>
+      
+      <!-- stop / close buttons -->
+        <div style="display:flex;flex-direction:row">
+          <div style="padding-right:10px">
+            <p>-{{ timerInSeconds - this.recorderDurationInSeconds }}</p>
+          </div>
           <icon-button
-            class="ar-icon ar-icon__lg"
-            :name="iconButtonType"
-            :class="{
-              'ar-icon--rec': isRecording,
-              'ar-icon--pulse': isRecording && volume > 0.02
-            }"
-            @click.native="toggleRecorder"/>
-        </div>
-        <div style="flex:3;text-align:center">
-          <div class="">{{recordedTime}}</div>
-        </div>
-        <div style="padding-right:10px">
-          <p>-{{ timerInSeconds - this.recorderDurationInSeconds }}</p>
-        </div>
-        <div>
-          <icon-button
+            v-if="isRecorder"
             class="ar-icon ar-icon__sm ar-recorder__stop"
             name="stop"
             @click.native="stopRecorder"/>
+
+          <icon-button
+            v-else
+            class="ar-icon ar-icon__sm ar-recorder__stop"
+            name="close"
+            @click.native="removeRecord"/>
         </div>
-        <div @click="removeRecord">
-          <p>close</p>
-        </div>
+
       </div>
-
-      <!-- <div class="ar-recorder__records-limit" v-if="attempts">Attempts: {{attemptsLeft}}/{{attempts}}</div> -->
-      <!-- <div class="ar-records">
-        <div
-          class="ar-records__record"
-          :class="{'ar-records__record--selected': record.id === selected.id}"
-          :key="record.id"
-          v-for="(record, idx) in recordList"
-          @click="choiceRecord(record)">
-            <div
-              class="ar__rm"
-              v-if="record.id === selected.id"
-              @click="removeRecord(idx)">&times;</div>
-            <div class="ar__text">Record {{idx + 1}}</div>
-            <div class="ar__text">{{record.duration}}</div>
-
-            <downloader
-              v-if="record.id === selected.id && showDownloadButton"
-              class="ar__downloader"
-              :record="record"
-              :filename="filename"/>
-
-            <uploader
-              v-if="record.id === selected.id && showUploadButton"
-              class="ar__uploader"
-              :record="record"
-              :filename="filename"
-              :headers="headers"
-              :upload-url="uploadUrl"/>
-        </div>
-      </div> -->
-
-      <audio-player :record="selected"/>
     </div>
+
   </div>
 </template>
 
@@ -266,6 +251,7 @@
   import Uploader    from './uploader'
   import UploaderPropsMixin from '@/mixins/uploader-props'
   import { convertTimeMMSS }  from '@/lib/utils'
+  import LineControl   from './line-control'
 
   export default {
     mixins: [UploaderPropsMixin],
@@ -295,13 +281,15 @@
         recordList    : [],
         selected      : {},
         uploadStatus  : null,
+        progress      : 0,
       }
     },
     components: {
       AudioPlayer,
       Downloader,
       IconButton,
-      Uploader
+      Uploader,
+      LineControl
     },
     mounted () {
       this.$eventBus.$on('start-upload', () => {
@@ -365,7 +353,12 @@
           sampleRate      : this.sampleRate,
           format          : this.format
         })
-      }
+      },
+      _onUpdateProgress (pos) {
+        // if (pos) {
+        //   this.player.currentTime = pos * this.player.duration
+        // }
+      },
     },
     computed: {
       attemptsLeft () {
@@ -394,6 +387,15 @@
       },
       timerInSeconds () {
         return this.time * 60
+      },
+      recorderProgress () {
+        return this.timerInSeconds;
+      },
+      isRecorder () {
+        if(this.selected.url && this.selected.hasOwnProperty('blob')) {
+          return false
+        }
+        return true
       }
     }
   }
