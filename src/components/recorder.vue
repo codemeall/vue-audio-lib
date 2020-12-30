@@ -7,7 +7,8 @@
     box-sizing: content-box;
 
     &-content {
-      padding: 16px;
+      padding-top: 10px;
+      padding-bottom: 10px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -28,7 +29,8 @@
 
     &-end-actions {
       display:flex;
-      flex-direction:row
+      flex-direction:row;
+      align-items: center;
     }
 
     &-progress-line {
@@ -218,7 +220,7 @@
             <!-- recorder/mic button -->
             <div class="ar-player-actions">
               <icon-button
-              class="ar-icon ar-icon__lg"
+              class="ar-icon ar-icon__sm"
               :name="iconButtonType"
               :class="{
                 'ar-icon--rec': isRecording,

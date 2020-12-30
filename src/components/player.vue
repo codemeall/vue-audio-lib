@@ -82,7 +82,7 @@
     <div class="ar-player-actions">
       <icon-button
         id="play"
-        class="ar-icon ar-icon__lg ar-player__play"
+        class="ar-icon ar-icon__sm ar-player__play"
         :name="playBtnIcon"
         :class="{'ar-player__play--active': isPlaying}"
         @click.native="playback"/>
