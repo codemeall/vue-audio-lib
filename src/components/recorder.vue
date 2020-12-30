@@ -15,6 +15,31 @@
       align-items: center;
     }
 
+    &-audio-container {
+      align-items:center;
+      flex-direction: row;
+      width:100%;
+      display: flex;
+    }
+
+    &-player {
+      width:100%;
+      display: flex;
+      align-items:center;
+    }
+
+    &-end-actions {
+      display:flex;
+      flex-direction:row
+    }
+
+    &-progress-line {
+      flex:2;
+      text-align:center;
+      margin-left:10px;
+      margin-right:10px;
+    }
+
     &-records {
       height: 138px;
       padding-top: 1px;
@@ -188,10 +213,10 @@
   <div class="ar">
 
     <div class="ar-content" :class="{'ar__blur': isUploading}">
-      <div style="align-items:center;flex-direction: row;width:100%;display: flex;">
+      <div class="ar-audio-container">
         
           <!-- recorder block -->
-          <div v-if="isRecorder" style="width:100%;display: flex;align-items:center;" class="ar-player">
+          <div v-if="isRecorder" style="" class="ar-player ">
             <!-- recorder/mic button -->
             <div style="flex:1" class="ar-player-actions">
               <icon-button
@@ -205,7 +230,7 @@
             </div>
 
             <!-- recording status line -->
-            <div style="flex:2;text-align:center;margin-left:10px;margin-right:10px;">
+            <div class="ar-progress-line">
               <line-control
               v-if="isRecorder"
               
@@ -220,7 +245,7 @@
         <audio-player v-else :record="selected"/>
       
       <!-- stop / close buttons -->
-        <div style="display:flex;flex-direction:row">
+        <div class="ar-end-actions">
           <div style="padding-right:10px">
             <p>-{{ timerInSeconds - this.recorderDurationInSeconds }}</p>
           </div>

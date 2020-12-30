@@ -10,6 +10,16 @@
     justify-content: center;
     background-color: unset;
     font-family: 'Roboto', sans-serif;
+    width:100%;
+    display: flex;
+    align-items:center;
+
+    .ar-progress-bar {
+      flex:2;
+      text-align:center;
+      margin-left:10px;
+      margin-right:10px;
+    }
 
     & > .ar-player-bar {
       // border: 1px solid #E8E8E8;
@@ -68,7 +78,7 @@
 </style>
 
 <template>
-  <div style="width:100%;display: flex;align-items:center;" class="ar-player">
+  <div class="ar-player">
     <div style="flex:1" class="ar-player-actions">
       <icon-button
         id="play"
@@ -78,7 +88,7 @@
         @click.native="playback"/>
     </div>
 
-    <div style="flex:2;text-align:center;margin-left:10px;margin-right:10px;">
+    <div class="ar-progress-bar">
       <line-control
         
         ref-id="progress"
