@@ -22,6 +22,8 @@
       :before-upload="callback"
       :successful-upload="callback"
       :failed-upload="callback"
+      :playerOnly="playerOnly"
+      :audioUrl="audioUrl"
       :bit-rate="192"/>
 
     <audio-player :src="mp3" v-if="!showRecorder"/>
@@ -35,6 +37,8 @@
       return {
         mp3: '/demo/example.mp3',
         showRecorder: true,
+        playerOnly: false,
+        audioUrl: "_valid_audio_url_",
         headers: {
           'X-Custom-Header': 'some data'
         }

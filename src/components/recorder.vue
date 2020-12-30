@@ -242,7 +242,7 @@
           </div>
 
         <!-- audio player -->
-        <audio-player v-else :record="selected"/>
+        <audio-player v-else :record="selected" :src="audioURL" />
       
       <!-- stop / close buttons -->
         <div class="ar-end-actions">
@@ -283,6 +283,9 @@
     props: {
       attempts : { type: Number },
       time     : { type: Number },
+
+      playerOnly : {type: Boolean },
+      audioUrl   : { type: String },
 
       bitRate    : { type: Number, default: 128   },
       sampleRate : { type: Number, default: 44100 },
@@ -417,10 +420,17 @@
         return this.timerInSeconds;
       },
       isRecorder () {
+        if(this.playerOnly&&this.audioUrl) return false
         if(this.selected.url && this.selected.hasOwnProperty('blob')) {
           return false
         }
         return true
+      },
+      audioURL () {
+        if(this.playerOnly&&this.audioUrl) {
+          return this.audioUrl
+        }
+        return null
       }
     }
   }
