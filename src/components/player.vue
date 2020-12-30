@@ -40,7 +40,7 @@
     }
 
     &-actions {
-      width: 55%;
+      // width: 55%;
       display: flex;
       align-items: center;
       justify-content: space-around;
@@ -79,7 +79,7 @@
 
 <template>
   <div class="ar-player">
-    <div style="flex:1" class="ar-player-actions">
+    <div class="ar-player-actions">
       <icon-button
         id="play"
         class="ar-icon ar-icon__lg ar-player__play"

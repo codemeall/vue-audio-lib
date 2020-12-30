@@ -216,7 +216,7 @@
           <!-- recorder block -->
           <div v-if="isRecorder" style="" class="ar-player ">
             <!-- recorder/mic button -->
-            <div style="flex:1" class="ar-player-actions">
+            <div class="ar-player-actions">
               <icon-button
               class="ar-icon ar-icon__lg"
               :name="iconButtonType"
