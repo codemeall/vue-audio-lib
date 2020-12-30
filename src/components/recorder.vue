@@ -1,6 +1,6 @@
 <style lang="scss">
   .ar {
-    width: 420px;
+    width: 100%;
     font-family: 'Roboto', sans-serif;
     border-radius: 16px;
     background-color: #FAFAFA;
