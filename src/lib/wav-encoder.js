@@ -27,7 +27,7 @@ export default class {
 
     this._floatTo16BitPCM(view, 44, this.samples)
 
-    const blob = new Blob([view], {type: 'audio/wav'})
+    const blob = new Blob([view], {type: 'aac'})
 
     return {
       id   : Date.now(),
